@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/CalvinLeather/DocuServer/issues"
   },
-  "homepage": "https://github.com/CalvinLeather/DocuServer#readme"
+  "homepage": "https://github.com/CalvinLeather/DocuServer#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongodb": "^2.2.25",
+    "node-env-file": "^0.1.8",
+    "nodemon": "^1.11.0"
+  }
 }
