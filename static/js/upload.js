@@ -46,9 +46,10 @@ function handleFileSelect(evt) {
           var filtered = Object.keys(counts).reduce(function(filtered, key) {
             if (counts[key]>10 && key.length>item_length) filtered[key]=counts[key];
             return filtered;},{})
-            console.log(filtered)
             item_length--        }
         console.log(filtered)
+        var match = getDOI(pdf_string)
+        console.log(match)
         $('#instantiatedEdit input[name=tags]').val(Object.keys(filtered).join(','))
         $('#instantiatedEdit .panelForm').show()
         $('#instantiatedEdit .spinner_div').hide()

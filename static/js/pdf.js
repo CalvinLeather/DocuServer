@@ -54,3 +54,11 @@ function getCounts(string) {
   });
   return distances
 }
+
+function getDOI(string){
+  var find_doi = new RegExp(/10\.([0-9])+\/([a-z0-9\.\-])+ /,"ig")
+  var match = find_doi.exec(string)
+  if (match) {
+    return match[0].trim()
+  }
+}
