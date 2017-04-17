@@ -34,14 +34,24 @@ function handleFileSelect(evt) {
     })
     jqXHR_upload.done((e)=>{
       var doc = JSON.parse(e);
-      console.log($('#instantiatedEdit input[name=id]').first().val())
       $('#instantiatedEdit input[name=id]').first().val(doc._id);
-      console.log($('#instantiatedEdit input[name=id]').first().val())
       var text_promise = processPDF('files/'+JSON.parse(e).filename)
       text_promise.then((s)=>{
+        var pdf_string = s.join(' ');
+        var counts = getCounts(pdf_string)
+        var filtered = {}
+        var item_length = 20
+        console.log('asdf')
+        while (Object.keys(filtered).length<5) {
+          var filtered = Object.keys(counts).reduce(function(filtered, key) {
+            if (counts[key]>10 && key.length>item_length) filtered[key]=counts[key];
+            return filtered;},{})
+            console.log(filtered)
+            item_length--        }
+        console.log(filtered)
+        $('#instantiatedEdit input[name=tags]').val(Object.keys(filtered).join(','))
         $('#instantiatedEdit .panelForm').show()
         $('#instantiatedEdit .spinner_div').hide()
-        var pdf_string = s.join(' ');
         var buffer = '';
         var potential_authors = findAuthorCandidate(pdf_string);
         $('#instantiatedEdit .author_tag').on('click', (e)=>{
@@ -76,7 +86,7 @@ function handleFileSelect(evt) {
             var authors = $('#instantiatedEdit .tag_selected').toArray().map((e)=>{return e.innerHTML}).join(',');
             formData.append('title', $('#instantiatedEdit input[name=title]').val());
             formData.append('authors',authors);
-            formData.append('tags','tags');
+            formData.append('tags',$('#instantiatedEdit input[name=tags]').val());
             var jqXHR_upload = $.ajax({
               url:'documents/'+$('#instantiatedEdit input[name=id]').first().val(),
               method:'POST',
