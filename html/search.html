@@ -7,14 +7,9 @@
     <!-- load MUI -->
     <link href="http://cdn.muicss.com/mui-0.9.15/css/mui.min.css" rel="stylesheet" type="text/css" />
     <script src="http://cdn.muicss.com/mui-0.9.15/js/mui.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-  <script
-  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   crossorigin="anonymous"></script>
   <style>
     body {
@@ -57,20 +52,14 @@
           <td class="mui--text-title">DocuServer.io</td>
           <td align="right">
             <ul class="mui-list--inline mui--text-body2">
-              <li><a href="/">Login</a></li>
+              <li><a href="/">Library</a></li>
+              <li><a href="/search">Search</a></li>
             </ul>
           </td>
         </tr>
       </table>
     </div>
-    <div class='mui-col-md-4 mui-col-lg-2 mui-panel'>
-      <h3>Search</h3>
-      <label>Field to search:</label><br>
-      <input type='text' id='fieldInput'></input><br><br>
-      <label>Search key:</label><br>
-      <input type='text'></input><br>
-    </div>
-    <div class="mui-col-md-8 mui-col-lg-10">
+    <div class="mui-container">
       <div class='mui-panel'>
       <table class="mui-table" id="paper-table">
         <thead>
@@ -88,19 +77,8 @@
     </div>
   </div>
   <div class="mui-panel" id='editPanel' hidden>
-    <label>Title</label><input name="title" type="text"><br>
-    <label>Author</label><input name="authors" type="text"><br>
-    <label>Tags</label><input type="text" name="tags"></input><br>
-    <div id="progress_bar" hidden><div class="percent">0%</div></div>
-    <input type="button" class='submitEditButton' value="Submit"></input>
+    Search by
   </div>
 
-  <div id="drop_zone"></div>
-  <output id="list"></output>
-  
-  <script src='static/js/edit.js'></script>
-  <script src="static/js/ui.js"></script>
-  <script src="static/js/delete.js"></script>
-  <script src="static/js/upload.js"></script>
   </body>
 </html>
