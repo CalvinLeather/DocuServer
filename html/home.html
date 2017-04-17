@@ -16,6 +16,7 @@
   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   crossorigin="anonymous"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.js'></script>
   <style>
     body {
       background-color:#F3F7F6
@@ -47,6 +48,9 @@
     .filerow:hover{
       background-color: #E7EBEA;
     }
+    .tag_selected{
+      background-color: #7C8989 !important;
+    }
   </style>
   </head>
   <body>
@@ -68,7 +72,7 @@
       <label>Field to search:</label><br>
       <input type='text' id='fieldInput'></input><br><br>
       <label>Search key:</label><br>
-      <input type='text'></input><br>
+      <input type='text' id='keyInput'></input><br>
     </div>
     <div class="mui-col-md-8 mui-col-lg-10">
       <div class='mui-panel'>
@@ -88,19 +92,27 @@
     </div>
   </div>
   <div class="mui-panel" id='editPanel' hidden>
+    <div class='spinner_div'>Processing PDF
+    </div>
+    <div class='panelForm'>
     <label>Title</label><input name="title" type="text"><br>
-    <label>Author</label><input name="authors" type="text"><br>
+    <div class='title_tags'></div><br><br><br>
+    <div class='author_tags'></div><br>
     <label>Tags</label><input type="text" name="tags"></input><br>
+    <input type='hidden' value='none' name='id'></input>
     <div id="progress_bar" hidden><div class="percent">0%</div></div>
     <input type="button" class='submitEditButton' value="Submit"></input>
+    <input type="hidden" name='title_completed' value="0"></input>
+  </div>
   </div>
 
   <div id="drop_zone"></div>
   <output id="list"></output>
-  
+  <script src='static/js/pdf.js'></script>
   <script src='static/js/edit.js'></script>
   <script src="static/js/ui.js"></script>
   <script src="static/js/delete.js"></script>
   <script src="static/js/upload.js"></script>
+    <script src="static/js/search.js"></script>
   </body>
 </html>

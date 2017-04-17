@@ -30,6 +30,7 @@ app.use(bodyParser.text())
 
 app.use('/files', express.static('uploads'))
 app.use('/static', express.static('static'))
+app.use('/bower_components',  express.static('bower_components'))
 
 
 app.get('/', (req, res)=>{
@@ -39,11 +40,22 @@ app.get('/search', (req, res)=>{
 	res.sendFile(path.join(__dirname+'/html/search.html'))
 })
 
-app.get('/documents', (req, res)=>{
+
+app.get('/documents',upload.none(), (req, res)=>{
+	res.setHeader('Content-Type', 'application/json')
+	if (req.query.key){
+		var r = new RegExp(req.query.key, 'ig')
+		var field =req.query.field
+		var obj = {}
+		obj[field] = r
+		db.collection('documents').find(obj).toArray((err, results)=>{
+			res.send(JSON.stringify(results))
+		})
+	} else{
 	db.collection('documents').find().toArray((err, results)=>{
-		res.setHeader('Content-Type', 'application/json')
 		res.send(JSON.stringify(results))
 	})
+	}
 })
 
 var form_data = [
@@ -56,7 +68,6 @@ app.post('/documents', upload.fields(form_data),(req, res)=>{
 	if (!req.body) return res.sendStatus(400)
 	if (!req.files) return res.sendStatus(400)
 	var file = req.files['file'][0]
-	console.log(file)
 	var data = {"title":req.body.title,
 							"authors":req.body.authors.split(','),
 							"tags":req.body.tags.split(','),
@@ -64,6 +75,20 @@ app.post('/documents', upload.fields(form_data),(req, res)=>{
 	db.collection('documents').insert(data, (err, records)=>{
 		if (err) return console.log(err)
 		res.send(JSON.stringify(records['ops'][0]))
+	})
+})
+
+app.post('/documents/:id', upload.fields(form_data),(req, res)=>{
+	if (!req.body) return res.sendStatus(400)
+	var data = {$set: {"title":req.body.title,
+							"authors":req.body.authors.split(','),
+							"tags":req.body.tags.split(',')
+						}}
+	var o_id = new ObjectID(req.params.id);
+	console.log(o_id)
+	db.collection('documents').update({'_id':o_id}, data, (err, records)=>{
+		if (err) return console.log(err)
+		res.send(JSON.stringify(records))
 	})
 })
 

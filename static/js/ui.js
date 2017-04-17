@@ -1,7 +1,15 @@
-var jqXHR = $.get('documents');
-jqXHR.done((res)=>{
+refreshRows()
+function refreshRows() {
+  var jqXHR = $.get('documents');
+  jqXHR.done((res)=>{
+    drawRows(res)
+  })
+}
+
+function drawRows(data) {
   var table = $('#paper-table tbody');
-  res.forEach((e)=>{
+  table.empty()
+  data.forEach((e)=>{
     if (e.hasOwnProperty('filename')) {
       var filename = e['filename'];
     } else {
@@ -17,7 +25,7 @@ jqXHR.done((res)=>{
     var actions =del+edit+view
     table.append("<tr class='filerow'><td>"+title+"</td><td>"+authors+"</td><td>"+tags+"</td><td>"+actions+"</td></tr>");
   })
-})
+}
 
 $('#fieldInput').autocomplete({
   minLength:0,
@@ -25,3 +33,19 @@ $('#fieldInput').autocomplete({
   delay:0,
   source: ['authors', 'tags', 'title']
 })
+
+function activateEditOverlay(file) {
+    var options = {
+      'keyboard': true, // teardown when <esc> key is pressed (default: true)
+      'static': false, // maintain overlay when clicked (default: false)
+      'onclose': function() {} // execute function when overlay is closed
+    };
+    var el = document.createElement('div');
+    el.style.width = '25%';
+    el.style.margin = '100px auto';
+    el.style.backgroundColor = '#fff';
+    var overlayEl = mui.overlay('on', options, el);
+    var el = $(el)
+    el.append($('#editPanel').clone().prop('id', 'instantiatedEdit'))
+    $('#instantiatedEdit').show()
+}
