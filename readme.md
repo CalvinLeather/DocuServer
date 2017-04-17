@@ -4,7 +4,7 @@
 <p>The project is still very much WIP</p>
 
 <h4>Usage</h4>
-<p>Use <code>npm install --save</code> to install dependencies.I used bower for pdfjs, and will be switching this packedge over to npm soon, but for now, its included the repo.</p>
+<p>Use <code>npm install</code> to install dependencies.I used bower for pdfjs, and will be switching this packedge over to npm soon, but for now, its included the repo.</p>
 <p>You'll need to define a .env file with MONGO URIs for read/write and read-only users:
 <pre>
 exports MONGOURI_RW=mongodb://*****
